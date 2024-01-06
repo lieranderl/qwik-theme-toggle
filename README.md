@@ -66,9 +66,9 @@ bun run build
 
 ## Example
 
-Check out the example located in the /example directory to see Qwik-Theme-Toggle in action.
+Qwik-Theme-Toggle in action.
 
-[![Qwik-Toasts Example Video](https://img.youtube.com/vi/)]()
+[![Qwik-Toasts Example Video](https://img.youtube.com/vi/s2el9wlPJjc/0.jpg)](https://www.youtube.com/watch?v=s2el9wlPJjc)
 
 Add daisyUI to your tailwind.config.js files, add tailwind for qwik-theme-toggle:
 
