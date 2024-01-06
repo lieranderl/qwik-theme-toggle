@@ -1,2 +1,2 @@
-export { Logo } from "./components/logo/logo";
-export { Counter } from "./components/counter/counter";
+export { ThemeToggle } from "./components/theme-toggle/theme-toggle";
+export { ThemeScript } from "./components/theme-toggle/theme-script";

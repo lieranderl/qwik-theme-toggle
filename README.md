@@ -1,47 +1,112 @@
-# Qwik Library ⚡️
+# Qwik-Theme-Toggle Library ⚡️
+
+The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a [Qwik](https://qwik.builder.io/) component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience.
+
+Leveraging the power and flexibility of [Tailwind CSS](https://tailwindcss.com/) and its [DaisyUI](https://daisyui.com/) plugin, the library allows for a utility-first framework approach and usage of a robust UI toolkit to create aesthetically pleasing and responsive designs.
 
 - [Qwik Docs](https://qwik.builder.io/)
 - [Discord](https://qwik.builder.io/chat)
 - [Qwik on GitHub](https://github.com/BuilderIO/qwik)
 - [@QwikDev](https://twitter.com/QwikDev)
 - [Vite](https://vitejs.dev/)
-- [Partytown](https://partytown.builder.io/)
-- [Mitosis](https://github.com/BuilderIO/mitosis)
 - [Builder.io](https://www.builder.io/)
 
 ---
 
+## Installation
+
+```bash
+npm install qwik-theme-toggle
+```
+
+or if you use bun:
+
+```bash
+bun install qwik-theme-toggle
+```
+
 ## Project Structure
 
-Inside your project, you'll see the following directories and files:
+Inside your Qwik-Toasts project, you'll find the following directories and files:
 
 ```
-├── public/
-│   └── ...
 └── src/
-    ├── components/
-    │   └── ...
+    ├── components/theme-toggle
+    │              └── ...
     └── index.ts
 ```
 
-- `src/components`: Recommended directory for components.
+- `src/components/theme-toggle`: This directory is a location for Qwik-Theme-Toggle components.
 
-- `index.ts`: The entry point of your component library, make sure all the public components are exported from this file.
+- `index.ts`: The entry point of your Qwik-Theme-Toggle library.
+
+- `example/`: Contains an example showcasing the usage of Qwik-Theme-Toggle.
 
 ## Development
 
-Development mode uses [Vite's development server](https://vitejs.dev/). For Qwik during development, the `dev` command will also server-side render (SSR) the output. The client-side development modules are loaded by the browser.
+During development, Qwik-Theme-Toggle uses [Vite's development server](https://vitejs.dev/) with server-side rendering (SSR) capabilities provided by Qwik and [Bun](https://bun.sh/). Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a bundler, test runner, and Node.js-compatible package manager.
 
-```
-bun dev
+Start development:
+
+```bash
+bun install
 ```
 
-> Note: during dev mode, Vite will request many JS files, which does not represent a Qwik production build.
+```bash
+bun start
+```
 
 ## Production
 
-The production build should generate the production build of your component library in (./lib) and the typescript type definitions in (./lib-types).
+For production, the Qwik-Theme-Toggle library should generate the production build in the `./lib` directory, along with TypeScript type definitions in `./lib-types`.
+
+```bash
+bun run build
+```
+
+## Example
+
+Check out the example located in the /example directory to see Qwik-Theme-Toggle in action.
+
+[![Qwik-Toasts Example Video](https://img.youtube.com/vi/)]()
+
+Add daisyUI to your tailwind.config.js files, add tailwind for qwik-theme-toggle:
 
 ```
-bun build
+
+module.exports = {
+  content: [
+    //...
+    "./node_modules/qwik-theme-toggle/**/*.{cjs,mjs}"
+  ],
+  //...
+  plugins: [require("daisyui")],
+}
+```
+
+Add `<ThemeScript />` into head
+
+```
+ <head>
+    //...
+    <ThemeScript themeStorageKey="theme" />
+ </head>
+```
+
+Use toggle button in your code:
+
+```
+<ThemeToggle themeStorageKey="theme" textSize="text-2xl" />
+```
+
+Install dependencies:
+
+```
+bun install
+```
+
+Run:
+
+```bash
+bun start
 ```

@@ -1,5 +1,7 @@
-import { Counter } from "./components/counter/counter";
-import { Logo } from "./components/logo/logo";
+import { ThemeScript } from "./components/theme-toggle/theme-script";
+import { ThemeToggle } from "./components/theme-toggle/theme-toggle";
+
+import "./global.css";
 
 export default () => {
   return (
@@ -7,10 +9,12 @@ export default () => {
       <head>
         <meta charSet="utf-8" />
         <title>Qwik Blank App</title>
+        <ThemeScript themeStorageKey="theme" />
       </head>
       <body>
-        <Logo />
-        <Counter />
+        <div class="m-12">
+          <ThemeToggle themeStorageKey="theme" textSize="text-2xl" />
+        </div>
       </body>
     </>
   );
