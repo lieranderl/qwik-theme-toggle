@@ -79,7 +79,7 @@ export const ThemeToggle = component$(
           <div class="moon">
             <HiMoonSolid />
           </div>
-          <div class="auto">
+          <div class="auto fill-current">
             <AutoIcon />
           </div>
         </div>
