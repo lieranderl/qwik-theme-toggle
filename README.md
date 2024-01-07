@@ -70,6 +70,8 @@ bun run build
 
 Qwik-Theme-Toggle in action.
 
+[Codesandbox](https://codesandbox.io/p/github/lieranderl/qwik-theme-toggle/main)
+
 [![Qwik-Theme-Toggle Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
 
 Add daisyUI to your **tailwind.config.js** files, add `darkMode: "class"` for pure Tailwind CSS:
