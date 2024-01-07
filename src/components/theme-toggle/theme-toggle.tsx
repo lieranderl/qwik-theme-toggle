@@ -61,20 +61,18 @@ export const ThemeToggle = component$(
     });
 
     return (
-      <div>
-        <div
-          class={`toggle-button h-[1em] w-[1em] p-1 ${textSize}`}
-          onClick$={handleThemeToggle$}
-        >
-          <div class="sun">
-            <HiSunSolid />
-          </div>
-          <div class="moon">
-            <HiMoonSolid />
-          </div>
-          <div class="auto fill-current">
-            <AutoIcon />
-          </div>
+      <div
+        class={`toggle-button h-[1em] w-[1em] p-1 ${textSize}`}
+        onClick$={handleThemeToggle$}
+      >
+        <div class="sun">
+          <HiSunSolid />
+        </div>
+        <div class="moon">
+          <HiMoonSolid />
+        </div>
+        <div class="auto fill-current">
+          <AutoIcon />
         </div>
       </div>
     );
