@@ -1,15 +1,14 @@
+import { component$, useSignal, $, useStyles$ } from "@builder.io/qwik";
 import {
-  component$,
-  useSignal,
-  useVisibleTask$,
-  $,
-  useStyles$,
-} from "@builder.io/qwik";
-import { ThemeScriptProps } from "./theme-script";
+  THEME_MODES,
+  ThemeNameType,
+  ThemeScriptProps,
+  mediaQuerySubsHandler,
+  setThemeDaisyUI,
+  setThemeTailwind,
+} from "./theme-script";
 import { HiSunSolid, HiMoonSolid } from "@qwikest/icons/heroicons";
 import styles from "./themeicon.css?inline";
-
-export const THEME_MODES = { LIGHT: "light", DARK: "dark", AUTO: "auto" };
 
 export type ThemeToggleProps = {
   textSize: string;
@@ -20,51 +19,48 @@ export const ThemeToggle = component$(
     const selectedIcon = useSignal(THEME_MODES.AUTO);
     useStyles$(styles);
 
+    const ApplyTheme = $(
+      (
+        themeStorageKey: string,
+        icon: ThemeNameType & "auto",
+        theme: ThemeNameType,
+      ) => {
+        // save theme in localstorage
+        localStorage.setItem(themeStorageKey, icon);
+        //daisyui
+        document.documentElement.setAttribute("icon-theme", icon);
+        setThemeDaisyUI(theme);
+        //tailwind
+        setThemeTailwind(theme);
+        //mediaQuery Subscribtion handler
+        mediaQuerySubsHandler(icon);
+      },
+    );
+
     const handleThemeToggle$ = $(async () => {
       let dataTheme: string = "";
       const themeModeValue =
         localStorage.getItem(themeStorageKey) || THEME_MODES.AUTO;
-      console.log("themeModeValue:", themeModeValue);
-      if (themeModeValue !== undefined) {
-        if (themeModeValue === THEME_MODES.AUTO) {
+      // toggle logic on click
+      if (themeModeValue === THEME_MODES.AUTO) {
+        dataTheme = THEME_MODES.DARK;
+        selectedIcon.value = THEME_MODES.DARK;
+      } else if (themeModeValue === THEME_MODES.DARK) {
+        dataTheme = THEME_MODES.LIGHT;
+        selectedIcon.value = THEME_MODES.LIGHT;
+      } else if (themeModeValue === THEME_MODES.LIGHT) {
+        selectedIcon.value = THEME_MODES.AUTO;
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
           dataTheme = THEME_MODES.DARK;
-          selectedIcon.value = THEME_MODES.DARK;
-        } else if (themeModeValue === THEME_MODES.DARK) {
+        } else {
           dataTheme = THEME_MODES.LIGHT;
-          selectedIcon.value = THEME_MODES.LIGHT;
-        } else if (themeModeValue === THEME_MODES.LIGHT) {
-          selectedIcon.value = THEME_MODES.AUTO;
-          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            dataTheme = THEME_MODES.DARK;
-          } else {
-            dataTheme = THEME_MODES.LIGHT;
-          }
         }
       }
-      localStorage.setItem(themeStorageKey, selectedIcon.value);
-      document.documentElement.setAttribute("icon-theme", selectedIcon.value);
-      document.documentElement.setAttribute("data-theme", `${dataTheme}`);
-    });
-
-    // eslint-disable-next-line qwik/no-use-visible-task
-    useVisibleTask$(async () => {
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (e) => {
-          if (selectedIcon.value === THEME_MODES.AUTO) {
-            if (e.matches) {
-              document.documentElement.setAttribute(
-                "data-theme",
-                `${THEME_MODES.DARK}`,
-              );
-            } else {
-              document.documentElement.setAttribute(
-                "data-theme",
-                `${THEME_MODES.LIGHT}`,
-              );
-            }
-          }
-        });
+      ApplyTheme(
+        themeStorageKey,
+        selectedIcon.value as ThemeNameType & "auto",
+        dataTheme as ThemeNameType,
+      );
     });
 
     return (
