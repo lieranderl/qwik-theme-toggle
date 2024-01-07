@@ -1,8 +1,9 @@
-import { component$, useSignal, $, useStyles$ } from "@builder.io/qwik";
+import { component$, useSignal, $, useStyles$, Signal } from "@builder.io/qwik";
 import {
-  THEME_MODES,
-  ThemeNameType,
+  THEME,
   ThemeScriptProps,
+  ThemesType,
+  ThemesWithAutoType,
   mediaQuerySubsHandler,
   setThemeDaisyUI,
   setThemeTailwind,
@@ -16,14 +17,14 @@ export type ThemeToggleProps = {
 
 export const ThemeToggle = component$(
   ({ themeStorageKey, textSize }: ThemeScriptProps & ThemeToggleProps) => {
-    const selectedIcon = useSignal(THEME_MODES.AUTO);
+    const selectedIcon: Signal<ThemesWithAutoType> = useSignal(THEME.AUTO);
     useStyles$(styles);
 
     const ApplyTheme = $(
       (
         themeStorageKey: string,
-        icon: ThemeNameType & "auto",
-        theme: ThemeNameType,
+        icon: ThemesWithAutoType,
+        theme: ThemesType,
       ) => {
         // save theme in localstorage
         localStorage.setItem(themeStorageKey, icon);
@@ -38,29 +39,25 @@ export const ThemeToggle = component$(
     );
 
     const handleThemeToggle$ = $(async () => {
-      let dataTheme: string = "";
+      let dataTheme: ThemesType = THEME.LIGHT;
       const themeModeValue =
-        localStorage.getItem(themeStorageKey) || THEME_MODES.AUTO;
+        localStorage.getItem(themeStorageKey) || THEME.AUTO;
       // toggle logic on click
-      if (themeModeValue === THEME_MODES.AUTO) {
-        dataTheme = THEME_MODES.DARK;
-        selectedIcon.value = THEME_MODES.DARK;
-      } else if (themeModeValue === THEME_MODES.DARK) {
-        dataTheme = THEME_MODES.LIGHT;
-        selectedIcon.value = THEME_MODES.LIGHT;
-      } else if (themeModeValue === THEME_MODES.LIGHT) {
-        selectedIcon.value = THEME_MODES.AUTO;
+      if (themeModeValue === THEME.AUTO) {
+        dataTheme = THEME.DARK;
+        selectedIcon.value = THEME.DARK;
+      } else if (themeModeValue === THEME.DARK) {
+        dataTheme = THEME.LIGHT;
+        selectedIcon.value = THEME.LIGHT;
+      } else if (themeModeValue === THEME.LIGHT) {
+        selectedIcon.value = THEME.AUTO;
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          dataTheme = THEME_MODES.DARK;
+          dataTheme = THEME.DARK;
         } else {
-          dataTheme = THEME_MODES.LIGHT;
+          dataTheme = THEME.LIGHT;
         }
       }
-      ApplyTheme(
-        themeStorageKey,
-        selectedIcon.value as ThemeNameType & "auto",
-        dataTheme as ThemeNameType,
-      );
+      ApplyTheme(themeStorageKey, selectedIcon.value, dataTheme);
     });
 
     return (

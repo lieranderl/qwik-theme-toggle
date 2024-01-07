@@ -1,6 +1,7 @@
 # Qwik-Theme-Toggle Library ⚡️
 
-The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a [Qwik](https://qwik.builder.io/) component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience. 
+The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a [Qwik](https://qwik.builder.io/) component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience.
+
 ### Works with Tailwind CSS and DaisyUI.
 
 Leveraging the power and flexibility of [Tailwind CSS](https://tailwindcss.com/) and its [DaisyUI](https://daisyui.com/) plugin, the library allows for a utility-first framework approach and usage of a robust UI toolkit to create aesthetically pleasing and responsive designs.
@@ -71,7 +72,7 @@ Qwik-Theme-Toggle in action.
 
 [![Qwik-Theme-Toggle Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
 
-Add daisyUI to your **tailwind.config.js** files, add ```darkMode: "class"``` for pure Tailwind CSS:
+Add daisyUI to your **tailwind.config.js** files, add `darkMode: "class"` for pure Tailwind CSS:
 
 ```
 module.exports = {

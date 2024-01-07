@@ -1,22 +1,31 @@
 import { useOnDocument, $, component$ } from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
 
-export type ThemeNameType = "light" | "dark";
+export type ThemesType = "light" | "dark";
+export type ThemeAutoType = "auto";
+export type ThemesWithAutoType = ThemesType | ThemeAutoType;
+export const THEME: {
+  LIGHT: ThemesType;
+  DARK: ThemesType;
+  AUTO: ThemeAutoType;
+} = {
+  LIGHT: "light",
+  DARK: "dark",
+  AUTO: "auto",
+};
 
-export const THEME_MODES = { LIGHT: "light", DARK: "dark", AUTO: "auto" };
-
-export const setThemeTailwind = (theme: ThemeNameType) => {
-  if (theme === "dark") {
-    document.documentElement.classList.remove(`${THEME_MODES.LIGHT}`);
-    document.documentElement.classList.add(`${THEME_MODES.DARK}`);
+export const setThemeTailwind = (theme: ThemesType) => {
+  if (theme === THEME.DARK) {
+    document.documentElement.classList.remove(`${THEME.LIGHT}`);
+    document.documentElement.classList.add(`${THEME.DARK}`);
   }
-  if (theme === "light") {
-    document.documentElement.classList.remove(`${THEME_MODES.DARK}`);
-    document.documentElement.classList.add(`${THEME_MODES.LIGHT}`);
+  if (theme === THEME.LIGHT) {
+    document.documentElement.classList.remove(`${THEME.DARK}`);
+    document.documentElement.classList.add(`${THEME.LIGHT}`);
   }
 };
 
-export const setThemeDaisyUI = (theme: ThemeNameType) => {
+export const setThemeDaisyUI = (theme: ThemesType) => {
   document.documentElement.setAttribute("data-theme", theme);
 };
 
@@ -26,15 +35,15 @@ export const mediaQueryList = isBrowser
 
 export const colorSchemeChangeHandler = (e: MediaQueryListEvent) => {
   if (e.matches) {
-    setThemeDaisyUI(THEME_MODES.DARK as ThemeNameType);
-    setThemeTailwind(THEME_MODES.DARK as ThemeNameType);
+    setThemeDaisyUI(THEME.DARK);
+    setThemeTailwind(THEME.DARK);
   } else {
-    setThemeDaisyUI(THEME_MODES.LIGHT as ThemeNameType);
-    setThemeTailwind(THEME_MODES.LIGHT as ThemeNameType);
+    setThemeDaisyUI(THEME.LIGHT);
+    setThemeTailwind(THEME.LIGHT);
   }
 };
 
-export const mediaQuerySubsHandler = (theme: ThemeNameType & "auto") => {
+export const mediaQuerySubsHandler = (theme: ThemesWithAutoType) => {
   if (mediaQueryList) {
     if (theme === "auto") {
       mediaQueryList.addEventListener("change", colorSchemeChangeHandler);
@@ -53,24 +62,37 @@ export const ThemeScript = component$(
       "DOMContentLoaded",
       $(() => {
         const themePref = localStorage.getItem(themeStorageKey);
-        if (themePref) {
-          mediaQuerySubsHandler(themePref as ThemeNameType & "auto");
+        function isThemeModesWithAuto(
+          theme: string,
+        ): theme is ThemesWithAutoType {
+          return (
+            theme === THEME.LIGHT ||
+            theme === THEME.DARK ||
+            theme === THEME.AUTO
+          );
+        }
+        if (themePref && isThemeModesWithAuto(themePref)) {
+          mediaQuerySubsHandler(themePref);
         }
       }),
     );
     const themeScript = `
-      const themePref = localStorage.getItem('${themeStorageKey}')
+      let themePref = localStorage.getItem('${themeStorageKey}');
+      if (!themePref) {
+        localStorage.setItem('${themeStorageKey}', '${THEME.AUTO}');
+        themePref = '${THEME.AUTO}';
+      }
       document.documentElement
           .setAttribute('data-theme',
           themePref ??
-              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+              (window.matchMedia('(prefers-color-scheme: ${THEME.DARK})').matches ? '${THEME.DARK}' : '${THEME.LIGHT}')
           );
       document.documentElement
           .setAttribute('icon-theme',
-          themePref || "auto");
+          themePref || '${THEME.AUTO}');
       document.documentElement
-              .classList.add((themePref && themePref!="auto") ? themePref :
-              window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');`;
+              .classList.add((themePref && themePref!='${THEME.AUTO}') ? themePref :
+              (window.matchMedia('(prefers-color-scheme: ${THEME.DARK})').matches ? '${THEME.DARK}' : '${THEME.LIGHT}'));`;
     return <script dangerouslySetInnerHTML={themeScript} />;
   },
 );
