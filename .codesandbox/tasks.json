@@ -16,7 +16,10 @@
     "bun start --no-open": {
       "name": "bun start --no-open",
       "command": "bun start --no-open",
-      "runAtStart": true
+      "runAtStart": true,
+      "preview": {
+        "port": 5173
+      }
     }
   }
 }
