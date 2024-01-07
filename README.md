@@ -28,7 +28,7 @@ bun install qwik-theme-toggle
 
 ## Project Structure
 
-Inside your Qwik-Toasts project, you'll find the following directories and files:
+Inside Qwik-Theme-Toggle project, you'll find the following directories and files:
 
 ```
 └── src/
@@ -69,7 +69,7 @@ bun run build
 
 Qwik-Theme-Toggle in action.
 
-[![Qwik-Toasts Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
+[![Qwik-Theme-Toggle Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
 
 Add daisyUI to your **tailwind.config.js** files, add ```darkMode: "class"``` for pure Tailwind CSS:
 
