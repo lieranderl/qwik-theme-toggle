@@ -17,6 +17,8 @@ Leveraging the power and flexibility of [Tailwind CSS](https://tailwindcss.com/)
 
 ## Installation
 
+[NPM package](https://www.npmjs.com/package/qwik-theme-toggle)
+
 ```bash
 npm install qwik-theme-toggle
 ```
