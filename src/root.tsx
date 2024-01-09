@@ -18,7 +18,7 @@ export default () => {
           <div class="mx-3 me-auto">Test Theme Toggle Button</div>
           {/* Theme button */}
           <div class="me-3">
-            <ThemeToggle themeStorageKey="theme" textSize="text-2xl" myClass={"text-primary hover:text-secondary"} />
+            <ThemeToggle themeStorageKey="theme" textSize="text-2xl" myClass={"hover:text-secondary"} />
           </div>
         </div>
 
