@@ -4,10 +4,6 @@
   transition: transform 0.2s ease-in 0.2s;
 }
 
-.toggle-button:hover {
-  @apply text-gray-600;
-}
-
 .sun,
 .moon,
 .auto {

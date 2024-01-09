@@ -13,10 +13,11 @@ import styles from "./themeicon.css?inline";
 
 export type ThemeToggleProps = {
   textSize: string;
+  myClass?: string;
 };
 
 export const ThemeToggle = component$(
-  ({ themeStorageKey, textSize }: ThemeScriptProps & ThemeToggleProps) => {
+  ({ themeStorageKey, textSize, myClass }: ThemeScriptProps & ThemeToggleProps) => {
     const selectedIcon: Signal<ThemesWithAutoType> = useSignal(THEME.AUTO);
     useStyles$(styles);
 
@@ -62,7 +63,7 @@ export const ThemeToggle = component$(
 
     return (
       <div
-        class={`toggle-button h-[1em] w-[1em] p-1 ${textSize}`}
+        class={`toggle-button h-[1em] w-[1em] p-1 ${textSize} ${myClass}`}
         onClick$={handleThemeToggle$}
       >
         <div class="sun">

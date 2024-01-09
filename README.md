@@ -101,9 +101,9 @@ Add `<ThemeScript />` into head
 ```
 
 Use toggle button in your code:
-
+Set icon size and/or add your own class.
 ```
-<ThemeToggle themeStorageKey="theme" textSize="text-2xl" />
+<ThemeToggle themeStorageKey="theme" textSize="text-2xl" myClass={"text-primary hover:text-secondary"} />
 ```
 
 Install dependencies:
