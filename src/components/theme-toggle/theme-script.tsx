@@ -82,17 +82,10 @@ export const ThemeScript = component$(
         localStorage.setItem('${themeStorageKey}', '${THEME.AUTO}');
         themePref = '${THEME.AUTO}';
       }
-      document.documentElement
-          .setAttribute('data-theme',
-          themePref ??
-              (window.matchMedia('(prefers-color-scheme: ${THEME.DARK})').matches ? '${THEME.DARK}' : '${THEME.LIGHT}')
-          );
-      document.documentElement
-          .setAttribute('icon-theme',
-          themePref || '${THEME.AUTO}');
-      document.documentElement
-              .classList.add((themePref && themePref!='${THEME.AUTO}') ? themePref :
-              (window.matchMedia('(prefers-color-scheme: ${THEME.DARK})').matches ? '${THEME.DARK}' : '${THEME.LIGHT}'));`;
+      const attrTheme = themePref && themePref=== '${THEME.AUTO}' ? (window.matchMedia('(prefers-color-scheme: ${THEME.DARK})').matches ? '${THEME.DARK}' : '${THEME.LIGHT}') : themePref;
+      document.documentElement.setAttribute('data-theme', attrTheme);
+      document.documentElement.setAttribute('icon-theme', themePref || '${THEME.AUTO}');
+      document.documentElement.classList.add(attrTheme);`;
     return <script dangerouslySetInnerHTML={themeScript} />;
   },
 );
