@@ -96,14 +96,23 @@ Add `<ThemeScript />` into head
 ```
  <head>
     //...
-    <ThemeScript themeStorageKey="theme" />
+     <ThemeScript
+        themeStorageKey="theme" // name of the local storage theme key
+        themeQuery="theme"      // (Optional) name of the query param to reflect theme
+      />
  </head>
 ```
 
 Use toggle button in your code:
 Set icon size and/or add your own class.
+
 ```
-<ThemeToggle themeStorageKey="theme" textSize="text-2xl" myClass={"hover:text-secondary"} />
+<ThemeToggle
+  themeStorageKey="theme"           // name of the local storage theme key
+  themeQuery="theme"                // (Optional) name of the query param to reflect theme
+  textSize="text-2xl"               // Size of the toggle button
+  myClass={"hover:text-secondary"}  // Apply a custom class
+/>
 ```
 
 Install dependencies:
