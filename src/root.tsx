@@ -1,8 +1,8 @@
 import { component$ } from "@builder.io/qwik";
-import { ThemeScript } from "./components/theme-toggle/theme-script";
-import { ThemeToggle } from "./components/theme-toggle/theme-toggle";
 
 import "./global.css";
+import { ThemeScript } from "./components/theme-toggle/theme-script";
+import { ThemeToggle } from "./components/theme-toggle/theme-toggle";
 
 export default () => {
   return (
@@ -11,14 +11,22 @@ export default () => {
         <meta charSet="utf-8" />
         <title>Qwik Blank App</title>
         {/* Theme Script */}
-        <ThemeScript themeStorageKey="theme" />
+        <ThemeScript
+          themeStorageKey="theme" // name of the local storage theme key
+          // themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
+        />
       </head>
       <body>
         <div class="navbar sticky top-0 z-10 h-4 bg-opacity-50 backdrop-blur-sm">
           <div class="mx-3 me-auto">Test Theme Toggle Button</div>
           {/* Theme button */}
           <div class="me-3">
-            <ThemeToggle themeStorageKey="theme" textSize="text-2xl" myClass={"hover:text-secondary"} />
+            <ThemeToggle
+              themeStorageKey="theme" // name of the local storage theme key
+              // themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
+              textSize="text-2xl"
+              myClass={"hover:text-secondary"}
+            />
           </div>
         </div>
 
