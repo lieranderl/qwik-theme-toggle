@@ -117,7 +117,7 @@ Set icon size and/or add your own class.
 
 Install dependencies:
 
-```
+```bash
 bun install
 ```
 

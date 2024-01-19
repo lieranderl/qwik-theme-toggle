@@ -3,6 +3,5 @@
   "build": {
     "dockerfile": "Dockerfile",
   },
-  "onCreateCommand": "bun install && bun update",
-  "postStartCommand": "bun start --no-open",
+  "onCreateCommand": "bun install && bun update"
 }
