@@ -62,8 +62,9 @@ export const ThemeToggle = component$(
       ) => {
         // save theme in localstorage
         localStorage.setItem(themeStorageKey, icon);
-        //apply theme in daisyui
+        // apply icon style class
         document.documentElement.setAttribute("icon-theme", icon);
+        //apply theme in daisyui
         setThemeDaisyUI(theme);
         //apply theme in tailwind
         setThemeTailwind(theme);
@@ -130,7 +131,7 @@ export const ThemeToggle = component$(
   },
 );
 
-export const AutoIcon = component$(() => {
+const AutoIcon = component$(() => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

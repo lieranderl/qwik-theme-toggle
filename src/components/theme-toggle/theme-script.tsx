@@ -21,7 +21,7 @@ const mediaQueryList = isBrowser
   ? window.matchMedia("(prefers-color-scheme: dark)")
   : null;
 
-export const colorSchemeChangeHandler = (e: MediaQueryListEvent) => {
+const colorSchemeChangeHandler = (e: MediaQueryListEvent) => {
   setTheme(e.matches ? THEME.DARK : THEME.LIGHT);
 };
 

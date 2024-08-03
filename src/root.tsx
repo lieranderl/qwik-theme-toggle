@@ -8,12 +8,11 @@ export default () => {
   return (
     <>
       <head>
-        <meta charSet="utf-8" />
         <title>Qwik Blank App</title>
         {/* Theme Script */}
         <ThemeScript
           themeStorageKey="theme" // name of the local storage theme key
-          // themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
+        // themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
         />
       </head>
       <body>
@@ -24,7 +23,7 @@ export default () => {
             <ThemeToggle
               themeStorageKey="theme" // name of the local storage theme key
               // themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
-              textSize="text-2xl"
+              textSize="text-3xl"
               myClass={"hover:text-secondary"}
             />
           </div>
@@ -37,7 +36,7 @@ export default () => {
   );
 };
 
-export const DaisyUIContent = component$(() => {
+const DaisyUIContent = component$(() => {
   return (
     <div class="container mx-auto pt-2">
       <h1>DaisyUI</h1>
@@ -94,7 +93,7 @@ export const DaisyUIContent = component$(() => {
   );
 });
 
-export const TailwindContent = component$(() => {
+const TailwindContent = component$(() => {
   return (
     <div class="container mx-auto mt-4 pt-2">
       <h1>Pure Tailwind</h1>

@@ -1,6 +1,6 @@
 {
   "name": "qwik-theme-toggle",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a Qwik component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience. Leveraging the power and flexibility of Tailwind CSS and its DaisyUI plugin, the library allows for a utility-first framework approach and usage of a robust UI toolkit to create aesthetically pleasing and responsive designs.",
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
@@ -46,24 +46,24 @@
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "^1.3.2",
-    "@types/eslint": "^8.44.8",
-    "@types/node": "^20.10.3",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "autoprefixer": "^10.4.14",
-    "daisyui": "^4.5.0",
-    "eslint": "^8.55.0",
+    "@builder.io/qwik": "^1.7.3",
+    "@types/eslint": "^8.56.11",
+    "@types/node": "^20.14.14",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.10",
+    "eslint": "^8.57.0",
     "eslint-plugin-qwik": "latest",
     "np": "^8.0.4",
-    "postcss": "^8.4.31",
-    "prettier": "^3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.3.2",
-    "undici": "^5.26.0",
-    "vite": "^5.0.6",
-    "vite-tsconfig-paths": "^4.2.1"
+    "postcss": "^8.4.40",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4",
+    "undici": "^5.28.4",
+    "vite": "^5.3.5",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
     "@qwikest/icons": "^0.0.13"
