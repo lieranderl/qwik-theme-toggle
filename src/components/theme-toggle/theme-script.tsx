@@ -1,4 +1,4 @@
-import { useOnDocument, $, component$ } from "@builder.io/qwik";
+import { $, component$, useOnDocument } from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
 
 export type ThemesType = "light" | "dark";
@@ -6,56 +6,56 @@ type ThemeAutoType = "auto";
 export type ThemesWithAutoType = ThemesType | ThemeAutoType;
 
 export const THEME = {
-  LIGHT: "light",
-  DARK: "dark",
-  AUTO: "auto",
+	LIGHT: "light",
+	DARK: "dark",
+	AUTO: "auto",
 } as const;
 
 const setTheme = (theme: ThemesType) => {
-  document.documentElement.classList.remove(THEME.LIGHT, THEME.DARK);
-  document.documentElement.classList.add(theme);
-  document.documentElement.setAttribute("data-theme", theme);
+	document.documentElement.classList.remove(THEME.LIGHT, THEME.DARK);
+	document.documentElement.classList.add(theme);
+	document.documentElement.setAttribute("data-theme", theme);
 };
 
 const mediaQueryList = isBrowser
-  ? window.matchMedia("(prefers-color-scheme: dark)")
-  : null;
+	? window.matchMedia("(prefers-color-scheme: dark)")
+	: null;
 
 const colorSchemeChangeHandler = (e: MediaQueryListEvent) => {
-  setTheme(e.matches ? THEME.DARK : THEME.LIGHT);
+	setTheme(e.matches ? THEME.DARK : THEME.LIGHT);
 };
 
 export const mediaQuerySubsHandler = (theme: ThemesWithAutoType) => {
-  if (mediaQueryList) {
-    theme === "auto"
-      ? mediaQueryList.addEventListener("change", colorSchemeChangeHandler)
-      : mediaQueryList.removeEventListener("change", colorSchemeChangeHandler);
-  }
+	if (mediaQueryList) {
+		theme === "auto"
+			? mediaQueryList.addEventListener("change", colorSchemeChangeHandler)
+			: mediaQueryList.removeEventListener("change", colorSchemeChangeHandler);
+	}
 };
 
 export type ThemeScriptProps = {
-  themeStorageKey: string;
-  themeQuery?: string;
+	themeStorageKey: string;
+	themeQuery?: string;
 };
 
 export const ThemeScript = component$(
-  ({ themeStorageKey, themeQuery }: ThemeScriptProps) => {
-    useOnDocument(
-      "DOMContentLoaded",
-      $(() => {
-        const themePref = localStorage.getItem(themeStorageKey);
-        if (
-          themePref &&
-          [THEME.LIGHT, THEME.DARK, THEME.AUTO].includes(
-            themePref as ThemesWithAutoType,
-          )
-        ) {
-          mediaQuerySubsHandler(themePref as ThemesWithAutoType);
-        }
-      }),
-    );
+	({ themeStorageKey, themeQuery }: ThemeScriptProps) => {
+		useOnDocument(
+			"DOMContentLoaded",
+			$(() => {
+				const themePref = localStorage.getItem(themeStorageKey);
+				if (
+					themePref &&
+					[THEME.LIGHT, THEME.DARK, THEME.AUTO].includes(
+						themePref as ThemesWithAutoType,
+					)
+				) {
+					mediaQuerySubsHandler(themePref as ThemesWithAutoType);
+				}
+			}),
+		);
 
-    const themeScript = `
+		const themeScript = `
       const params = new URLSearchParams(location.search);
       let themePref = localStorage.getItem("${themeStorageKey}");
       const themeQ = params.get("${themeQuery}");
@@ -92,6 +92,7 @@ export const ThemeScript = component$(
       document.documentElement.classList.add(attrTheme);
 
   `;
-    return <script dangerouslySetInnerHTML={themeScript} />;
-  },
+		// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+		return <script dangerouslySetInnerHTML={themeScript} />;
+	},
 );

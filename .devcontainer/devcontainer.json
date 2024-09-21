@@ -1,7 +1,7 @@
 {
-  "name": "Bun",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "onCreateCommand": "bun install && bun update"
+	"name": "Bun",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"onCreateCommand": "bun install && bun update"
 }
