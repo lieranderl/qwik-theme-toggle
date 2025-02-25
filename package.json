@@ -1,6 +1,6 @@
 {
   "name": "qwik-theme-toggle",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a Qwik component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience. Leveraging the power and flexibility of Tailwind CSS and its DaisyUI plugin, the library allows for a utility-first framework approach and usage of a robust UI toolkit to create aesthetically pleasing and responsive designs.",
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
