@@ -27,6 +27,9 @@ export default () => {
 							myClass={"hover:text-secondary"}
 						/>
 					</div>
+					<div class="me-3">
+						<button class="toggle-button p-1 text-3xl hover:text-secondary">Test Button</button>
+					</div>
 				</div>
 
 				<DaisyUIContent />

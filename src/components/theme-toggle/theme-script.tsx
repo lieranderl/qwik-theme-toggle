@@ -2,7 +2,7 @@ import { $, component$, useOnDocument } from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
 
 export type ThemesType = "light" | "dark";
-type ThemeAutoType = "auto";
+export type ThemeAutoType = "auto";
 export type ThemesWithAutoType = ThemesType | ThemeAutoType;
 
 export const THEME = {
@@ -59,7 +59,7 @@ export const ThemeScript = component$(
       const params = new URLSearchParams(location.search);
       let themePref = localStorage.getItem("${themeStorageKey}");
       const themeQ = params.get("${themeQuery}");
-      
+
       if (
         themeQ &&
         ["${THEME.LIGHT}", "${THEME.DARK}", "${THEME.AUTO}"].includes(themeQ)
@@ -72,7 +72,7 @@ export const ThemeScript = component$(
         themePref = "${THEME.AUTO}";
         localStorage.setItem("${themeStorageKey}", themePref);
       }
-      
+
       if (!themeQ || (themePref && themePref !== themeQ)) {
         if ("${themeQuery}" !== "undefined") {
           params.set("${themeQuery}", themePref);
