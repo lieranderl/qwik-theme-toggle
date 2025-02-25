@@ -120,10 +120,10 @@ export const ThemeToggle = component$(
 
 		return (
 			<div
-				class={`toggle-button h-[1em] w-[1em] p-1 ${textSize} ${myClass}`}
+				class={`toggle-button p-1 ${textSize} ${myClass}`}
 				onClick$={handleThemeToggle$}
 			>
-				<div class="sun">
+        <div class="sun">
 					<HiSunSolid />
 				</div>
 				<div class="moon">
