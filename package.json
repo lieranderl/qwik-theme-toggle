@@ -49,6 +49,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@builder.io/qwik": "^1.12.1",
+    "@qwikest/icons": "^0.0.13",
     "@tailwindcss/vite": "^4.0.9",
     "@types/eslint": "^8.56.12",
     "@types/node": "^20.17.19",
@@ -66,7 +67,6 @@
     "typescript": "^5.7.3",
     "undici": "^5.28.5",
     "vite": "^5.4.14",
-    "vite-tsconfig-paths": "v5.1.4",
-    "@qwikest/icons": "^0.0.13"
+    "vite-tsconfig-paths": "v5.1.4"
   }
 }
