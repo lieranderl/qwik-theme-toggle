@@ -76,24 +76,10 @@ Qwik-Theme-Toggle in action.
 
 [![Qwik-Theme-Toggle Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
 
-Add daisyUI to your **tailwind.config.js** files, add `darkMode: "class"` for pure Tailwind CSS:
-
-```
-module.exports = {
-  content: [
-    //...
-    "./node_modules/qwik-theme-toggle/**/*.{cjs,mjs}"
-  ],
-  //..
-  darkMode: "class", // for Tailwind
-  //...
-  plugins: [require("daisyui")], // for DaisyUI
-}
-```
-
+## Usage
 Add `<ThemeScript />` into head
 
-```
+```html
  <head>
     //...
      <ThemeScript
@@ -106,7 +92,7 @@ Add `<ThemeScript />` into head
 Use toggle button in your code:
 Set icon size and/or add your own class.
 
-```
+```html
 <ThemeToggle
   themeStorageKey="theme"           // name of the local storage theme key
   themeQuery="theme"                // (Optional) name of the query param to reflect theme
