@@ -1,114 +1,122 @@
-# Qwik-Theme-Toggle Library ⚡️
+# Qwik-Theme-Toggle
 
-The Qwik-Theme-Toggle Library is a lightweight, user-friendly JavaScript library developed as a [Qwik](https://qwik.builder.io/) component. It provides an efficient theme toggle button for web applications, enabling users to switch between light, dark, and auto modes, enhancing their browsing experience.
+**Qwik-Theme-Toggle** is a lightweight, zero‑flicker, SSR‑safe theme toggler built as a [Qwik](https://qwik.builder.io/) component.
 
-### Works with Tailwind CSS and DaisyUI.
+It supports:
 
-Leveraging the power and flexibility of [Tailwind CSS](https://tailwindcss.com/) and its [DaisyUI](https://daisyui.com/) plugin, the library allows for a utility-first framework approach and usage of a robust UI toolkit to create aesthetically pleasing and responsive designs.
-
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik on GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
-- [Builder.io](https://www.builder.io/)
+- Custom CSS themes (e.g., `latte`, `dracula`)
+- Auto mode with OS preference detection
+- DaisyUI & Tailwind compatibility
+- Icon modes (`light`, `dark`, `auto`)
+- URL query param sync (optional)
+- LocalStorage persistence
+- SSR hydration consistency
 
 ---
 
 ## Installation
 
-[NPM package](https://www.npmjs.com/package/qwik-theme-toggle)
-
 ```bash
 npm install qwik-theme-toggle
-```
-
-or if you use bun:
-
-```bash
+# or
 bun install qwik-theme-toggle
 ```
 
+---
+
+## Usage
+
+### 1. Add ThemeScript inside `<head>`
+
+```tsx
+<ThemeScript
+  themeStorageKey="theme"
+  themeQuery="theme"     // optional
+  lightTheme="latte"     // optional, default: 'light'
+  darkTheme="dracula"    // optional, default: 'dark'
+/>
+```
+
+### 2. Add ThemeToggle anywhere in your UI
+
+```tsx
+<ThemeToggle
+  themeStorageKey="theme"
+  themeQuery="theme"               // optional
+  lightTheme="latte"               // optional, default: 'light'
+  darkTheme="dracula"              // optional, default: 'dark'
+  textSize="text-3xl"
+  myClass="hover:text-secondary"
+/>
+```
+
+---
+
+## How it works
+
+### LocalStorage stores CSS theme:
+
+```
+latte | dracula | auto
+```
+
+### HTML is always consistent:
+
+```
+<html
+  class="latte"
+  data-theme="latte"
+  icon-theme="light"
+/>
+```
+
+`icon-theme` is **always**:
+
+```
+light | dark | auto
+```
+
+Auto mode resolves OS preference:
+
+```
+auto → latte (light OS)
+auto → dracula (dark OS)
+```
+
+---
+
 ## Project Structure
 
-Inside Qwik-Theme-Toggle project, you'll find the following directories and files:
-
 ```
-└── src/
-    ├── components/theme-toggle
-    │              └── ...
-    └── index.ts
+src/
+ ├── components/theme-toggle/
+ └── index.ts
+example/
 ```
 
-- `src/components/theme-toggle`: This directory is a location for Qwik-Theme-Toggle components.
-
-- `index.ts`: The entry point of your Qwik-Theme-Toggle library.
-
-- `example/`: Contains an example showcasing the usage of Qwik-Theme-Toggle.
+---
 
 ## Development
 
-During development, Qwik-Theme-Toggle uses [Vite's development server](https://vitejs.dev/) with server-side rendering (SSR) capabilities provided by Qwik and [Bun](https://bun.sh/). Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a bundler, test runner, and Node.js-compatible package manager.
-
-Start development:
-
 ```bash
 bun install
-```
-
-```bash
 bun start
 ```
 
-## Production
-
-For production, the Qwik-Theme-Toggle library should generate the production build in the `./lib` directory, along with TypeScript type definitions in `./lib-types`.
+## Production Build
 
 ```bash
 bun run build
 ```
 
-## Example
+Outputs:
 
-Qwik-Theme-Toggle in action.
+- `lib/` — compiled library
+- `lib-types/` — TypeScript definitions
 
-[Codesandbox](https://codesandbox.io/p/github/lieranderl/qwik-theme-toggle/main)
+---
 
-[![Qwik-Theme-Toggle Example Video](https://img.youtube.com/vi/51iWIiZFCQY/0.jpg)](https://www.youtube.com/watch?v=51iWIiZFCQY)
+## Live Demo
 
-## Usage
-Add `<ThemeScript />` into head
-
-```html
- <head>
-    //...
-     <ThemeScript
-        themeStorageKey="theme" // name of the local storage theme key
-        themeQuery="theme"      // (Optional) name of the query param to reflect theme
-      />
- </head>
-```
-
-Use toggle button in your code:
-Set icon size and/or add your own class.
-
-```html
-<ThemeToggle
-  themeStorageKey="theme"           // name of the local storage theme key
-  themeQuery="theme"                // (Optional) name of the query param to reflect theme
-  textSize="text-2xl"               // Size of the toggle button
-  myClass={"hover:text-secondary"}  // Apply a custom class
-/>
-```
-
-Install dependencies:
-
-```bash
-bun install
-```
-
-Run:
-
-```bash
-bun start
-```
+Codesandbox: https://codesandbox.io/p/github/lieranderl/qwik-theme-toggle/main  
+Video demo: https://www.youtube.com/watch?v=51iWIiZFCQY

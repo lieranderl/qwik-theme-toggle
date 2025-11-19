@@ -13,6 +13,8 @@ export default () => {
 				<ThemeScript
 					themeStorageKey="theme" // name of the local storage theme key
 					// themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
+					lightTheme="latte"
+					// darkTheme="mocha"
 				/>
 			</head>
 			<body>
@@ -25,6 +27,8 @@ export default () => {
 							// themeQuery="theme" // (Optional) name of the query param to reflect theme in URL
 							textSize="text-3xl"
 							myClass={"hover:text-secondary"}
+							lightTheme="latte"
+							// darkTheme="mocha"
 						/>
 					</div>
 				</div>

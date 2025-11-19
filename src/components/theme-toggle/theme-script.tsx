@@ -1,98 +1,122 @@
 import { $, component$, useOnDocument } from "@builder.io/qwik";
 import { isBrowser } from "@builder.io/qwik/build";
 
-export type ThemesType = "light" | "dark";
-export type ThemeAutoType = "auto";
-export type ThemesWithAutoType = ThemesType | ThemeAutoType;
-
-export const THEME = {
-	LIGHT: "light",
-	DARK: "dark",
-	AUTO: "auto",
+export const ICON_MODE = {
+  LIGHT: "light",
+  DARK: "dark",
+  AUTO: "auto",
 } as const;
 
-const setTheme = (theme: ThemesType) => {
-	document.documentElement.classList.remove(THEME.LIGHT, THEME.DARK);
-	document.documentElement.classList.add(theme);
-	document.documentElement.setAttribute("data-theme", theme);
+export type ThemeConfig = {
+  LIGHT: string; // CSS theme name (e.g., latte)
+  DARK: string;  // CSS theme name (e.g., dracula)
 };
+
+export function createThemeConfig(light = "light", dark = "dark") {
+  return { LIGHT: light, DARK: dark } satisfies ThemeConfig;
+}
 
 const mediaQueryList = isBrowser
-	? window.matchMedia("(prefers-color-scheme: dark)")
-	: null;
+  ? window.matchMedia("(prefers-color-scheme: dark)")
+  : null;
 
-const colorSchemeChangeHandler = (e: MediaQueryListEvent) => {
-	setTheme(e.matches ? THEME.DARK : THEME.LIGHT);
+let mediaChangeHandler: ((e: MediaQueryListEvent) => void) | null = null;
+
+export const subscribeAutoMode = (THEME: ThemeConfig) => {
+  if (!mediaQueryList) return;
+
+  unsubscribeAutoMode();
+
+  mediaChangeHandler = (e) => {
+    const cssTheme = e.matches ? THEME.DARK : THEME.LIGHT;
+
+    document.documentElement.classList.remove(THEME.LIGHT, THEME.DARK);
+    document.documentElement.classList.add(cssTheme);
+    document.documentElement.setAttribute("data-theme", cssTheme);
+  };
+
+  mediaQueryList.addEventListener("change", mediaChangeHandler);
 };
 
-export const mediaQuerySubsHandler = (theme: ThemesWithAutoType) => {
-	if (mediaQueryList) {
-		theme === "auto"
-			? mediaQueryList.addEventListener("change", colorSchemeChangeHandler)
-			: mediaQueryList.removeEventListener("change", colorSchemeChangeHandler);
-	}
+export const unsubscribeAutoMode = () => {
+  if (mediaChangeHandler && mediaQueryList) {
+    mediaQueryList.removeEventListener("change", mediaChangeHandler);
+    mediaChangeHandler = null;
+  }
 };
 
 export type ThemeScriptProps = {
-	themeStorageKey: string;
-	themeQuery?: string;
+  themeStorageKey: string;
+  themeQuery?: string;
+  lightTheme?: string;
+  darkTheme?: string;
 };
 
 export const ThemeScript = component$(
-	({ themeStorageKey, themeQuery }: ThemeScriptProps) => {
-		useOnDocument(
-			"DOMContentLoaded",
-			$(() => {
-				const themePref = localStorage.getItem(themeStorageKey);
-				if (
-					themePref &&
-					[THEME.LIGHT, THEME.DARK, THEME.AUTO].includes(
-						themePref as ThemesWithAutoType,
-					)
-				) {
-					mediaQuerySubsHandler(themePref as ThemesWithAutoType);
-				}
-			}),
-		);
+  ({ themeStorageKey, themeQuery, lightTheme, darkTheme }: ThemeScriptProps) => {
+    const THEME = createThemeConfig(lightTheme, darkTheme);
 
-		const themeScript = `
+    useOnDocument(
+      "DOMContentLoaded",
+      $(() => {
+        const stored = localStorage.getItem(themeStorageKey) ?? "auto";
+        if (stored === "auto") subscribeAutoMode(THEME);
+      })
+    );
+
+    const script = `
+      const key = "${themeStorageKey}";
+      const qpKey = "${themeQuery}";
       const params = new URLSearchParams(location.search);
-      let themePref = localStorage.getItem("${themeStorageKey}");
-      const themeQ = params.get("${themeQuery}");
 
-      if (
-        themeQ &&
-        ["${THEME.LIGHT}", "${THEME.DARK}", "${THEME.AUTO}"].includes(themeQ)
-      ) {
-        if (themePref && themePref !== themeQ) {
-          themePref = themeQ;
-          localStorage.setItem("${themeStorageKey}", themePref);
-        }
-      } else if (!themePref) {
-        themePref = "${THEME.AUTO}";
-        localStorage.setItem("${themeStorageKey}", themePref);
+      let theme = localStorage.getItem(key);
+
+      if (!theme) {
+        theme = "auto";
+        localStorage.setItem(key, theme);
       }
 
-      if (!themeQ || (themePref && themePref !== themeQ)) {
-        if ("${themeQuery}" !== "undefined") {
-          params.set("${themeQuery}", themePref);
-          window.location.replace(window.location.pathname + "?" + params.toString());
+      // Read from URL if provided
+      if (qpKey && qpKey !== "undefined") {
+        const qpVal = params.get(qpKey);
+        if (qpVal) {
+          theme = qpVal;
+          localStorage.setItem(key, theme);
         }
       }
-      
-      const attrTheme =
-        themePref === "${THEME.AUTO}"
-          ? window.matchMedia("(prefers-color-scheme: ${THEME.DARK})").matches
-            ? "${THEME.DARK}"
-            : "${THEME.LIGHT}"
-          : themePref;
-      
-      document.documentElement.setAttribute("data-theme", attrTheme);
-      document.documentElement.setAttribute("icon-theme", themePref);
-      document.documentElement.classList.add(attrTheme);
 
-  `;
-		// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-		return <script dangerouslySetInnerHTML={themeScript} />;
-	},
+      // Resolve actual CSS theme
+      let cssTheme;
+      if (theme === "auto") {
+        cssTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "${THEME.DARK}"
+          : "${THEME.LIGHT}";
+      } else {
+        cssTheme = theme; // latte or dracula
+      }
+
+      // Clean old classes and set new one
+      document.documentElement.classList.remove("${THEME.LIGHT}", "${THEME.DARK}");
+      document.documentElement.classList.add(cssTheme);
+      document.documentElement.setAttribute("data-theme", cssTheme);
+
+      // Icon-mode: always light/dark/auto
+      let iconMode =
+        theme === "auto"
+          ? "auto"
+          : cssTheme === "${THEME.LIGHT}"
+            ? "light"
+            : "dark";
+
+      document.documentElement.setAttribute("icon-theme", iconMode);
+
+      // Sync URL
+      if (qpKey && qpKey !== "undefined") {
+        params.set(qpKey, theme);
+        history.replaceState({}, "", location.pathname + "?" + params.toString());
+      }
+    `;
+
+    return <script dangerouslySetInnerHTML={script} />;
+  }
 );
